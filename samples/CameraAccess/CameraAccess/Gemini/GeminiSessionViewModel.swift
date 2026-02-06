@@ -6,13 +6,11 @@ class GeminiSessionViewModel: ObservableObject {
   @Published var isGeminiActive: Bool = false
   @Published var connectionState: GeminiConnectionState = .disconnected
   @Published var isModelSpeaking: Bool = false
-  @Published var sessionTimeRemaining: Int = GeminiConfig.sessionDurationSeconds
   @Published var errorMessage: String?
   @Published var showApiKeyPrompt: Bool = false
 
   private let geminiService = GeminiLiveService()
   private let audioManager = AudioManager()
-  private var sessionTimer: Task<Void, Never>?
   private var lastVideoFrameTime: Date = .distantPast
   private var stateObservation: Task<Void, Never>?
 
@@ -25,7 +23,6 @@ class GeminiSessionViewModel: ObservableObject {
     }
 
     isGeminiActive = true
-    sessionTimeRemaining = GeminiConfig.sessionDurationSeconds
 
     // Wire audio callbacks
     audioManager.onAudioCaptured = { [weak self] data in
@@ -106,19 +103,13 @@ class GeminiSessionViewModel: ObservableObject {
       connectionState = .disconnected
       return
     }
-
-    // Start session countdown timer
-    startTimer()
   }
 
   func stopSession() {
     audioManager.stopCapture()
     geminiService.disconnect()
-    sessionTimer?.cancel()
-    sessionTimer = nil
     stateObservation?.cancel()
     stateObservation = nil
-    sessionTimeRemaining = GeminiConfig.sessionDurationSeconds
     isGeminiActive = false
     connectionState = .disconnected
     isModelSpeaking = false
@@ -135,30 +126,5 @@ class GeminiSessionViewModel: ObservableObject {
   func saveApiKey(_ key: String) {
     GeminiConfig.apiKey = key
     showApiKeyPrompt = false
-  }
-
-  var timerDisplay: String {
-    let minutes = sessionTimeRemaining / 60
-    let seconds = sessionTimeRemaining % 60
-    return String(format: "%d:%02d", minutes, seconds)
-  }
-
-  // MARK: - Private
-
-  private func startTimer() {
-    sessionTimer = Task { [weak self] in
-      while !Task.isCancelled {
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
-        guard !Task.isCancelled, let self else { break }
-        if self.sessionTimeRemaining > 0 {
-          self.sessionTimeRemaining -= 1
-        }
-        if self.sessionTimeRemaining <= 0 {
-          self.stopSession()
-          self.errorMessage = "Session time limit reached (2 minutes for audio+video)"
-          break
-        }
-      }
-    }
   }
 }

@@ -19,16 +19,6 @@ struct GeminiStatusBar: View {
       .background(Color.black.opacity(0.6))
       .cornerRadius(16)
 
-      Spacer()
-
-      // Session timer
-      Text(geminiVM.timerDisplay)
-        .font(.system(size: 14, weight: .semibold).monospacedDigit())
-        .foregroundColor(geminiVM.sessionTimeRemaining <= 15 ? .red : .white)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
-        .background(Color.black.opacity(0.6))
-        .cornerRadius(16)
     }
   }
 

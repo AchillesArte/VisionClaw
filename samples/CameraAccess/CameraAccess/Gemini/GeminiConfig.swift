@@ -12,8 +12,6 @@ enum GeminiConfig {
   static let videoFrameInterval: TimeInterval = 1.0
   static let videoJPEGQuality: CGFloat = 0.5
 
-  static let sessionDurationSeconds: Int = 120
-
   static let systemInstruction = "You are an AI assistant helping someone wearing smart glasses. You can see what they see through their glasses camera. Describe what you see when asked, and answer questions conversationally. Keep responses concise and natural."
 
   private static let defaultApiKey = "REDACTED_GEMINI_API_KEY"
