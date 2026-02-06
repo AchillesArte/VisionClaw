@@ -19,8 +19,8 @@ enum GeminiConfig {
   private static let defaultApiKey = "AIzaSyDSDyn4l54VCiXGIx6SFQ9RyWefph8gHl4"
 
   static var apiKey: String {
-    get { UserDefaults.standard.string(forKey: "gemini_api_key") ?? defaultApiKey }
-    set { UserDefaults.standard.set(newValue, forKey: "gemini_api_key") }
+    get { UserDefaults.standard.string(forKey: "gemini_api_key_v2") ?? defaultApiKey }
+    set { UserDefaults.standard.set(newValue, forKey: "gemini_api_key_v2") }
   }
 
   static func websocketURL() -> URL? {
