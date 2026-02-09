@@ -2,7 +2,6 @@ import CoreImage
 import Foundation
 import MLX
 import MLXLMCommon
-import MLXRandom
 import MLXVLM
 import UIKit
 
@@ -115,8 +114,6 @@ class FastVLMService {
         let task = Task {
             do {
                 let modelContainer = try await _load()
-
-                MLXRandom.seed(UInt64(Date.timeIntervalSinceReferenceDate * 1000))
 
                 if Task.isCancelled { return }
 
