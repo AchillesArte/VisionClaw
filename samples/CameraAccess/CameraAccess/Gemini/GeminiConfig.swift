@@ -44,7 +44,7 @@ enum GeminiConfig {
   // REQUIRED: Add your own Gemini API key here.
   // Get one at https://aistudio.google.com/apikey
   // ---------------------------------------------------------------
-  static let apiKey = "YOUR_GEMINI_API_KEY"
+  static let apiKey = "AIzaSyCcmqqwe-cGH8dOkew1eP-IoL2Id8kaFyM"
 
   // ---------------------------------------------------------------
   // OPTIONAL: OpenClaw gateway config (for agentic tool-calling).
