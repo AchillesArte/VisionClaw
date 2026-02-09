@@ -39,7 +39,7 @@ jobs:
         if: ${{ github.event.inputs.gemini_api_key != '' }}
         working-directory: samples/CameraAccess
         run: |
-          sed -i '' "s|YOUR_GEMINI_API_KEY|${{ github.event.inputs.gemini_api_key }}|g" CameraAccess/Gemini/GeminiConfig.swift
+          sed -i '' '/static let apiKey/s|YOUR_GEMINI_API_KEY|${{ github.event.inputs.gemini_api_key }}|' CameraAccess/Gemini/GeminiConfig.swift
           echo "--- Verifying API key was set ---"
           grep "apiKey" CameraAccess/Gemini/GeminiConfig.swift
 
