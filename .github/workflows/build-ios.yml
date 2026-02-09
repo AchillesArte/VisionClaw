@@ -21,6 +21,10 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
+      - name: Install iOS 18.2 simulator runtime
+        run: |
+          xcodebuild -downloadPlatform iOS
+
       - name: Resolve Swift packages
         working-directory: samples/CameraAccess
         run: xcodebuild -resolvePackageDependencies -project CameraAccess.xcodeproj -scheme CameraAccess
@@ -40,13 +44,15 @@ jobs:
             -destination "generic/platform=iOS" \
             -configuration Release \
             -archivePath $RUNNER_TEMP/CameraAccess.xcarchive \
+            -skipPackagePluginValidation \
             CODE_SIGN_IDENTITY="-" \
             AD_HOC_CODE_SIGNING_ALLOWED=YES \
             CODE_SIGNING_ALLOWED=NO \
             DEVELOPMENT_TEAM="" \
             CODE_SIGN_ENTITLEMENTS="" \
             PRODUCT_BUNDLE_IDENTIFIER=com.visionclaw.app \
-            SKIP_INSTALL=NO
+            SKIP_INSTALL=NO \
+            ENABLE_PREVIEWS=NO
 
       - name: Create unsigned IPA
         run: |
