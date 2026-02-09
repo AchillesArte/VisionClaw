@@ -58,12 +58,12 @@ enum GeminiConfig {
   static let openClawGatewayToken = "YOUR_OPENCLAW_GATEWAY_TOKEN"
 
   static func websocketURL() -> URL? {
-    guard apiKey != "YOUR_GEMINI_API_KEY" && !apiKey.isEmpty else { return nil }
+    guard isConfigured else { return nil }
     return URL(string: "\(websocketBaseURL)?key=\(apiKey)")
   }
 
   static var isConfigured: Bool {
-    return apiKey != "YOUR_GEMINI_API_KEY" && !apiKey.isEmpty
+    return apiKey.count > 10 && apiKey != "YOUR_GEMINI_API_KEY"
   }
 
   static var isOpenClawConfigured: Bool {
