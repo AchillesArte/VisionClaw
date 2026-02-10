@@ -27,6 +27,24 @@
 		8FFD60542E849D0D0035E446 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD60532E849D0D0035E446 /* RegistrationView.swift */; };
 		8FFD60602E84A2F70035E446 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD605F2E84A2F70035E446 /* MainAppView.swift */; };
 		8FFD60612E84A2F70035E446 /* DebugMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFD605E2E84A2F70035E446 /* DebugMenuView.swift */; };
+		9DD6C9C22F3A832800ED7098 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 9DD6C9C12F3A832800ED7098 /* MLXLMCommon */; };
+		9DD6C9C42F3A832800ED7098 /* MLXVLM in Frameworks */ = {isa = PBXBuildFile; productRef = 9DD6C9C32F3A832800ED7098 /* MLXVLM */; };
+		9DD6C9D62F3A83DC00ED7098 /* preprocessor_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9CB2F3A83DC00ED7098 /* preprocessor_config.json */; };
+		9DD6C9D72F3A83DC00ED7098 /* added_tokens.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9C52F3A83DC00ED7098 /* added_tokens.json */; };
+		9DD6C9D82F3A83DC00ED7098 /* model.safetensors.index.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9CA2F3A83DC00ED7098 /* model.safetensors.index.json */; };
+		9DD6C9D92F3A83DC00ED7098 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9C62F3A83DC00ED7098 /* config.json */; };
+		9DD6C9DA2F3A83DC00ED7098 /* merges.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9C82F3A83DC00ED7098 /* merges.txt */; };
+		9DD6C9DB2F3A83DC00ED7098 /* vocab.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9D02F3A83DC00ED7098 /* vocab.json */; };
+		9DD6C9DC2F3A83DC00ED7098 /* model.safetensors in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9C92F3A83DC00ED7098 /* model.safetensors */; };
+		9DD6C9DD2F3A83DC00ED7098 /* tokenizer.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9CE2F3A83DC00ED7098 /* tokenizer.json */; };
+		9DD6C9DE2F3A83DC00ED7098 /* tokenizer_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9CF2F3A83DC00ED7098 /* tokenizer_config.json */; };
+		9DD6C9DF2F3A83DC00ED7098 /* special_tokens_map.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9CD2F3A83DC00ED7098 /* special_tokens_map.json */; };
+		9DD6C9E02F3A83DC00ED7098 /* processor_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DD6C9CC2F3A83DC00ED7098 /* processor_config.json */; };
+		9DD6C9E12F3A83DC00ED7098 /* fastvithd.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6C9C72F3A83DC00ED7098 /* fastvithd.mlpackage */; };
+		9DD6C9E22F3A83DC00ED7098 /* FastVLM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6C9D22F3A83DC00ED7098 /* FastVLM.swift */; };
+		9DD6C9E32F3A83DC00ED7098 /* FastVLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6C9D32F3A83DC00ED7098 /* FastVLMService.swift */; };
+		9DD6C9E42F3A83DC00ED7098 /* MediaProcessingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6C9D42F3A83DC00ED7098 /* MediaProcessingExtensions.swift */; };
+		9DD6C9E62F3A840700ED7098 /* FastVLMOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD6C9E52F3A840700ED7098 /* FastVLMOverlayView.swift */; };
 		A1B2C3D42F0A000200000001 /* GeminiConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42F0A000100000001 /* GeminiConfig.swift */; };
 		A1B2C3D42F0A000200000002 /* GeminiLiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42F0A000100000002 /* GeminiLiveService.swift */; };
 		A1B2C3D42F0A000200000003 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D42F0A000100000003 /* AudioManager.swift */; };
@@ -84,6 +102,22 @@
 		8FFD60532E849D0D0035E446 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		8FFD605E2E84A2F70035E446 /* DebugMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMenuView.swift; sourceTree = "<group>"; };
 		8FFD605F2E84A2F70035E446 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		9DD6C9C52F3A83DC00ED7098 /* added_tokens.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = added_tokens.json; sourceTree = "<group>"; };
+		9DD6C9C62F3A83DC00ED7098 /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
+		9DD6C9C72F3A83DC00ED7098 /* fastvithd.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = fastvithd.mlpackage; sourceTree = "<group>"; };
+		9DD6C9C82F3A83DC00ED7098 /* merges.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = merges.txt; sourceTree = "<group>"; };
+		9DD6C9C92F3A83DC00ED7098 /* model.safetensors */ = {isa = PBXFileReference; lastKnownFileType = file; path = model.safetensors; sourceTree = "<group>"; };
+		9DD6C9CA2F3A83DC00ED7098 /* model.safetensors.index.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = model.safetensors.index.json; sourceTree = "<group>"; };
+		9DD6C9CB2F3A83DC00ED7098 /* preprocessor_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = preprocessor_config.json; sourceTree = "<group>"; };
+		9DD6C9CC2F3A83DC00ED7098 /* processor_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = processor_config.json; sourceTree = "<group>"; };
+		9DD6C9CD2F3A83DC00ED7098 /* special_tokens_map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = special_tokens_map.json; sourceTree = "<group>"; };
+		9DD6C9CE2F3A83DC00ED7098 /* tokenizer.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer.json; sourceTree = "<group>"; };
+		9DD6C9CF2F3A83DC00ED7098 /* tokenizer_config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_config.json; sourceTree = "<group>"; };
+		9DD6C9D02F3A83DC00ED7098 /* vocab.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = vocab.json; sourceTree = "<group>"; };
+		9DD6C9D22F3A83DC00ED7098 /* FastVLM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastVLM.swift; sourceTree = "<group>"; };
+		9DD6C9D32F3A83DC00ED7098 /* FastVLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastVLMService.swift; sourceTree = "<group>"; };
+		9DD6C9D42F3A83DC00ED7098 /* MediaProcessingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProcessingExtensions.swift; sourceTree = "<group>"; };
+		9DD6C9E52F3A840700ED7098 /* FastVLMOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FastVLMOverlayView.swift; path = Components/FastVLMOverlayView.swift; sourceTree = "<group>"; };
 		A1B2C3D42F0A000100000001 /* GeminiConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiConfig.swift; sourceTree = "<group>"; };
 		A1B2C3D42F0A000100000002 /* GeminiLiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiLiveService.swift; sourceTree = "<group>"; };
 		A1B2C3D42F0A000100000003 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
@@ -109,8 +143,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DD6C9C42F3A832800ED7098 /* MLXVLM in Frameworks */,
 				8FD96B952E6F0F7D00F56AB1 /* MWDATCore in Frameworks */,
 				8FD96B952E6F0F7D00F56AB2 /* MWDATCamera in Frameworks */,
+				9DD6C9C22F3A832800ED7098 /* MLXLMCommon in Frameworks */,
 				8FD96B952E6F0F7D00F56AB3 /* MWDATMockDevice in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +194,7 @@
 		8FD96B762E6F0A9800F56AB1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9DD6C9E52F3A840700ED7098 /* FastVLMOverlayView.swift */,
 				8FFD5FF42E8422580035E446 /* Components */,
 				E6DA451B2E79A63100E3F688 /* MockDeviceKit */,
 				8FFD605E2E84A2F70035E446 /* DebugMenuView.swift */,
@@ -175,6 +212,7 @@
 		8FD96B7D2E6F0A9800F56AB1 /* CameraAccess */ = {
 			isa = PBXGroup;
 			children = (
+				9DD6C9D52F3A83DC00ED7098 /* FastVLM */,
 				9D3C69602F367CF700E641A5 /* iPhone */,
 				A1B2C3D42F0A000300000001 /* Gemini */,
 				8FD96B702E6F0A9800F56AB1 /* ViewModels */,
@@ -208,6 +246,36 @@
 				8FFD602A2E8433E20035E446 /* MockDeviceViewModel.swift */,
 			);
 			path = MockDeviceKit;
+			sourceTree = "<group>";
+		};
+		9DD6C9D12F3A83DC00ED7098 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				9DD6C9C52F3A83DC00ED7098 /* added_tokens.json */,
+				9DD6C9C62F3A83DC00ED7098 /* config.json */,
+				9DD6C9C72F3A83DC00ED7098 /* fastvithd.mlpackage */,
+				9DD6C9C82F3A83DC00ED7098 /* merges.txt */,
+				9DD6C9C92F3A83DC00ED7098 /* model.safetensors */,
+				9DD6C9CA2F3A83DC00ED7098 /* model.safetensors.index.json */,
+				9DD6C9CB2F3A83DC00ED7098 /* preprocessor_config.json */,
+				9DD6C9CC2F3A83DC00ED7098 /* processor_config.json */,
+				9DD6C9CD2F3A83DC00ED7098 /* special_tokens_map.json */,
+				9DD6C9CE2F3A83DC00ED7098 /* tokenizer.json */,
+				9DD6C9CF2F3A83DC00ED7098 /* tokenizer_config.json */,
+				9DD6C9D02F3A83DC00ED7098 /* vocab.json */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		9DD6C9D52F3A83DC00ED7098 /* FastVLM */ = {
+			isa = PBXGroup;
+			children = (
+				9DD6C9D12F3A83DC00ED7098 /* models */,
+				9DD6C9D22F3A83DC00ED7098 /* FastVLM.swift */,
+				9DD6C9D32F3A83DC00ED7098 /* FastVLMService.swift */,
+				9DD6C9D42F3A83DC00ED7098 /* MediaProcessingExtensions.swift */,
+			);
+			path = FastVLM;
 			sourceTree = "<group>";
 		};
 		A1B2C3D42F0A000300000001 /* Gemini */ = {
@@ -307,6 +375,7 @@
 			mainGroup = 5A5A5A5A5A5A5A5A5A5A5A5A;
 			packageReferences = (
 				95F7F3332DEF0D91006D1C1A /* XCRemoteSwiftPackageReference "meta-wearables-dat-ios" */,
+				9DD6C9C02F3A832800ED7098 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */,
 			);
 			productRefGroup = 7A7A7A7A7A7A7A7A7A7A7A7A /* Products */;
 			projectDirPath = "";
@@ -323,6 +392,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DD6C9D62F3A83DC00ED7098 /* preprocessor_config.json in Resources */,
+				9DD6C9D72F3A83DC00ED7098 /* added_tokens.json in Resources */,
+				9DD6C9D82F3A83DC00ED7098 /* model.safetensors.index.json in Resources */,
+				9DD6C9D92F3A83DC00ED7098 /* config.json in Resources */,
+				9DD6C9DA2F3A83DC00ED7098 /* merges.txt in Resources */,
+				9DD6C9DB2F3A83DC00ED7098 /* vocab.json in Resources */,
+				9DD6C9DC2F3A83DC00ED7098 /* model.safetensors in Resources */,
+				9DD6C9DD2F3A83DC00ED7098 /* tokenizer.json in Resources */,
+				9DD6C9DE2F3A83DC00ED7098 /* tokenizer_config.json in Resources */,
+				9DD6C9DF2F3A83DC00ED7098 /* special_tokens_map.json in Resources */,
+				9DD6C9E02F3A83DC00ED7098 /* processor_config.json in Resources */,
 				8FD96B8D2E6F0A9800F56AB1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,6 +434,7 @@
 				E6DA451F2E79A63100E3F688 /* MockDeviceKitView.swift in Sources */,
 				8FD96B872E6F0A9800F56AB1 /* StreamSessionViewModel.swift in Sources */,
 				8FD96B882E6F0A9800F56AB1 /* StreamSessionView.swift in Sources */,
+				9DD6C9E62F3A840700ED7098 /* FastVLMOverlayView.swift in Sources */,
 				8FFD60602E84A2F70035E446 /* MainAppView.swift in Sources */,
 				8FFD60612E84A2F70035E446 /* DebugMenuView.swift in Sources */,
 				8FD96B8A2E6F0A9800F56AB1 /* PhotoPreviewView.swift in Sources */,
@@ -366,6 +447,10 @@
 				A1B2C3D42F0A000200000001 /* GeminiConfig.swift in Sources */,
 				A1B2C3D42F0A000200000002 /* GeminiLiveService.swift in Sources */,
 				A1B2C3D42F0A000200000003 /* AudioManager.swift in Sources */,
+				9DD6C9E12F3A83DC00ED7098 /* fastvithd.mlpackage in Sources */,
+				9DD6C9E22F3A83DC00ED7098 /* FastVLM.swift in Sources */,
+				9DD6C9E32F3A83DC00ED7098 /* FastVLMService.swift in Sources */,
+				9DD6C9E42F3A83DC00ED7098 /* MediaProcessingExtensions.swift in Sources */,
 				A1B2C3D42F0A000200000004 /* GeminiSessionViewModel.swift in Sources */,
 				A1B2C3D42F0A000200000005 /* GeminiOverlayView.swift in Sources */,
 			);
@@ -660,6 +745,14 @@
 				version = 0.4.0;
 			};
 		};
+		9DD6C9C02F3A832800ED7098 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift-examples";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.29.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -677,6 +770,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 95F7F3332DEF0D91006D1C1A /* XCRemoteSwiftPackageReference "meta-wearables-dat-ios" */;
 			productName = MWDATMockDevice;
+		};
+		9DD6C9C12F3A832800ED7098 /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DD6C9C02F3A832800ED7098 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXLMCommon;
+		};
+		9DD6C9C32F3A832800ED7098 /* MLXVLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9DD6C9C02F3A832800ED7098 /* XCRemoteSwiftPackageReference "mlx-swift-examples" */;
+			productName = MLXVLM;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

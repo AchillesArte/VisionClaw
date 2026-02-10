@@ -53,6 +53,7 @@ class FastVLMService {
     private var previousOutput: String = ""
     private var stableFrameCount: Int = 0
     private let stableConfirmThreshold = 2
+    private let regroundInterval = 5  // Every N stable checks, run fresh description
 
     // Stable-mode throttling
     private var lastStableCheckTime = Date.distantPast
@@ -60,14 +61,23 @@ class FastVLMService {
 
     // MARK: - Prompt
 
+    private let basePrompt = "Describe what you see briefly, about 15 words or less."
+
+    private var shouldReground: Bool {
+        // Periodically run a fresh description to catch missed scene changes
+        return isSceneStable && stableFrameCount > 0 && stableFrameCount % regroundInterval == 0
+    }
+
     private var currentPrompt: String {
-        if previousOutput.isEmpty {
-            return "Describe what you see briefly, about 15 words or less."
+        if previousOutput.isEmpty || shouldReground {
+            return basePrompt
         } else {
+            // Default is to describe; SAME is the exception
             return """
-            Your previous observation: "\(previousOutput)"
-            Look at the current image. If the main subject is the same as before, respond with exactly: SAME
-            If the scene has meaningfully changed, describe the new scene briefly in 15 words or less.
+            Describe what you see briefly, about 15 words or less.
+            For reference, your last observation was: "\(previousOutput)"
+            If this is the EXACT same scene with the same main subject, you may respond with just: SAME
+            Otherwise, describe what you currently see.
             """
         }
     }
@@ -140,7 +150,11 @@ class FastVLMService {
         currentTask?.cancel()
 
         let frameStart = Date()
-        let promptText = currentPrompt
+        let isReground = shouldReground
+        let promptText = isReground ? basePrompt : currentPrompt
+        if isReground {
+            print("[FastVLM] Frame #\(thisFrame) - REGROUND CHECK (stable count: \(stableFrameCount))")
+        }
 
         let task = Task {
             do {
@@ -196,16 +210,34 @@ class FastVLMService {
                 if !Task.isCancelled {
                     let response = result.output.trimmingCharacters(in: .whitespacesAndNewlines)
                     let totalTime = Date().timeIntervalSince(frameStart)
-
-                    // Scene change detection
                     if response.uppercased().hasPrefix("SAME") {
+                        // Model confirmed same scene
                         stableFrameCount += 1
                         if stableFrameCount >= stableConfirmThreshold {
                             isSceneStable = true
                         }
                         output = sceneLabel
                         print("[FastVLM] Frame #\(thisFrame) - SAME (stable: \(stableFrameCount)) - TOTAL: \(Int(totalTime * 1000))ms")
+                    } else if isReground {
+                        // Re-ground check: compare fresh description with stored label
+                        let overlap = Self.wordOverlap(response, sceneLabel)
+                        if overlap > 0.3 {
+                            // Still similar enough — scene hasn't changed
+                            stableFrameCount += 1
+                            output = sceneLabel
+                            print("[FastVLM] Frame #\(thisFrame) - REGROUND (overlap: \(String(format: "%.0f", overlap * 100))%%, still stable: \(stableFrameCount)) - TOTAL: \(Int(totalTime * 1000))ms")
+                        } else {
+                            // Re-ground detected a scene change
+                            stableFrameCount = 0
+                            isSceneStable = false
+                            sceneLabel = response
+                            previousOutput = response
+                            sceneChangeCount += 1
+                            output = response
+                            print("[FastVLM] Frame #\(thisFrame) - REGROUND SCENE CHANGE #\(sceneChangeCount) (overlap: \(String(format: "%.0f", overlap * 100))%%): \(response) - TOTAL: \(Int(totalTime * 1000))ms")
+                        }
                     } else {
+                        // New description — scene changed
                         stableFrameCount = 0
                         isSceneStable = false
                         sceneLabel = response
@@ -273,5 +305,18 @@ class FastVLMService {
         output = ""
         ttft = ""
         evaluationState = .idle
+    }
+
+    // MARK: - Text Comparison
+
+    /// Jaccard similarity on lowercase words (intersection / union).
+    private static func wordOverlap(_ a: String, _ b: String) -> Float {
+        let stopWords: Set<String> = ["a", "an", "the", "is", "on", "of", "in", "with", "and", "it", "to"]
+        let wordsA = Set(a.lowercased().split(separator: " ").map(String.init)).subtracting(stopWords)
+        let wordsB = Set(b.lowercased().split(separator: " ").map(String.init)).subtracting(stopWords)
+        guard !wordsA.isEmpty || !wordsB.isEmpty else { return 1.0 }
+        let intersection = wordsA.intersection(wordsB).count
+        let union = wordsA.union(wordsB).count
+        return Float(intersection) / Float(union)
     }
 }
