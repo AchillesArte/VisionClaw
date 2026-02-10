@@ -52,10 +52,10 @@ enum GeminiConfig {
   // send messages, delegate tasks) via an OpenClaw gateway on your Mac.
   // See README.md for setup instructions.
   // ---------------------------------------------------------------
-  static let openClawHost = "http://YOUR_MAC_HOSTNAME.local"
+  static let openClawHost = "http://192.168.0.17"
   static let openClawPort = 18789
   static let openClawHookToken = "YOUR_OPENCLAW_HOOK_TOKEN"
-  static let openClawGatewayToken = "YOUR_OPENCLAW_GATEWAY_TOKEN"
+  static let openClawGatewayToken = "895553c4d7bba20ecdefe9cee520384dac3efa5b1d097a04"
 
   static func websocketURL() -> URL? {
     guard isConfigured else { return nil }
