@@ -13,6 +13,12 @@ struct FastVLMStatusBar: View {
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(.white)
 
+                if service.sceneChangeCount > 0 {
+                    Text("Scene #\(service.sceneChangeCount)")
+                        .font(.system(size: 11, weight: .regular, design: .monospaced))
+                        .foregroundColor(.white.opacity(0.7))
+                }
+
                 if !service.ttft.isEmpty {
                     Text("TTFT \(service.ttft)")
                         .font(.system(size: 11, weight: .regular, design: .monospaced))
@@ -27,8 +33,11 @@ struct FastVLMStatusBar: View {
     }
 
     private var statusColor: Color {
+        if service.isSceneStable {
+            return .blue
+        }
         switch service.evaluationState {
-        case .idle: return .blue
+        case .idle: return .gray
         case .loading: return .yellow
         case .processingPrompt: return .yellow
         case .generatingResponse: return .green
@@ -36,10 +45,13 @@ struct FastVLMStatusBar: View {
     }
 
     private var statusText: String {
+        if service.isSceneStable && service.evaluationState == .idle {
+            return "Stable"
+        }
         switch service.evaluationState {
         case .idle: return "FastVLM"
         case .loading: return service.modelInfo
-        case .processingPrompt: return "Processing..."
+        case .processingPrompt: return "Analyzing..."
         case .generatingResponse: return "Generating"
         }
     }
@@ -74,7 +86,7 @@ struct FastVLMOverlayView: View {
             Spacer()
 
             VStack(spacing: 8) {
-                FastVLMOutputView(text: service.output)
+                FastVLMOutputView(text: service.sceneLabel)
 
                 if service.evaluationState == .processingPrompt {
                     HStack(spacing: 8) {

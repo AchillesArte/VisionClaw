@@ -6,7 +6,7 @@ import MLXVLM
 import UIKit
 
 /// On-device vision-language model service using FastVLM (0.5B).
-/// Accepts UIImage frames and produces text descriptions.
+/// Uses a self-aware prompt to detect scene changes and maintain stable descriptions.
 @Observable
 @MainActor
 class FastVLMService {
@@ -19,6 +19,11 @@ class FastVLMService {
     var ttft = ""
     var modelInfo = ""
 
+    // Scene state
+    var sceneLabel: String = ""
+    var isSceneStable: Bool = false
+    var sceneChangeCount: Int = 0
+
     enum EvaluationState: String {
         case idle = "Idle"
         case loading = "Loading Model"
@@ -27,10 +32,6 @@ class FastVLMService {
     }
 
     var evaluationState = EvaluationState.idle
-
-    // MARK: - Configuration
-
-    var prompt = "Describe what you see briefly, about 15 words or less."
 
     // MARK: - Private
 
@@ -48,6 +49,29 @@ class FastVLMService {
     private var lastAnalyzeStart = Date.distantPast
     private var frameCount = 0
 
+    // Scene tracking
+    private var previousOutput: String = ""
+    private var stableFrameCount: Int = 0
+    private let stableConfirmThreshold = 2
+
+    // Stable-mode throttling
+    private var lastStableCheckTime = Date.distantPast
+    private let stableCheckInterval: TimeInterval = 2.0
+
+    // MARK: - Prompt
+
+    private var currentPrompt: String {
+        if previousOutput.isEmpty {
+            return "Describe what you see briefly, about 15 words or less."
+        } else {
+            return """
+            Your previous observation: "\(previousOutput)"
+            Look at the current image. If the main subject is the same as before, respond with exactly: SAME
+            If the scene has meaningfully changed, describe the new scene briefly in 15 words or less.
+            """
+        }
+    }
+
     // MARK: - Init
 
     init() {
@@ -63,7 +87,6 @@ class FastVLMService {
 
             MLX.GPU.set(cacheLimit: 256 * 1024 * 1024)
 
-            // Look for the model files in the app bundle's "models" folder
             let modelConfig = FastVLM.modelConfiguration
 
             let modelContainer = try await VLMModelFactory.shared.loadContainer(
@@ -96,7 +119,7 @@ class FastVLMService {
 
     // MARK: - Inference
 
-    /// Analyze a single frame. Returns immediately if already running or model not ready.
+    /// Analyze a single frame with scene-aware prompting.
     func analyze(_ image: UIImage) async {
         guard let ciImage = CIImage(image: image) else {
             print("[FastVLM] Failed to create CIImage from UIImage")
@@ -117,6 +140,7 @@ class FastVLMService {
         currentTask?.cancel()
 
         let frameStart = Date()
+        let promptText = currentPrompt
 
         let task = Task {
             do {
@@ -126,7 +150,7 @@ class FastVLMService {
 
                 let prepareStart = Date()
                 let userInput = UserInput(
-                    prompt: .text(prompt),
+                    prompt: .text(promptText),
                     images: [.ciImage(ciImage)]
                 )
 
@@ -170,9 +194,26 @@ class FastVLMService {
                 }
 
                 if !Task.isCancelled {
-                    self.output = result.output
+                    let response = result.output.trimmingCharacters(in: .whitespacesAndNewlines)
                     let totalTime = Date().timeIntervalSince(frameStart)
-                    print("[FastVLM] Frame #\(thisFrame) - TOTAL: \(Int(totalTime * 1000))ms")
+
+                    // Scene change detection
+                    if response.uppercased().hasPrefix("SAME") {
+                        stableFrameCount += 1
+                        if stableFrameCount >= stableConfirmThreshold {
+                            isSceneStable = true
+                        }
+                        output = sceneLabel
+                        print("[FastVLM] Frame #\(thisFrame) - SAME (stable: \(stableFrameCount)) - TOTAL: \(Int(totalTime * 1000))ms")
+                    } else {
+                        stableFrameCount = 0
+                        isSceneStable = false
+                        sceneLabel = response
+                        previousOutput = response
+                        sceneChangeCount += 1
+                        output = response
+                        print("[FastVLM] Frame #\(thisFrame) - SCENE CHANGE #\(sceneChangeCount): \(response) - TOTAL: \(Int(totalTime * 1000))ms")
+                    }
                 }
             } catch {
                 if !Task.isCancelled {
@@ -190,9 +231,16 @@ class FastVLMService {
         currentTask = task
     }
 
-    /// Called from the video frame pipeline. Runs continuously — back-pressure via isRunning guard.
+    /// Called from the video frame pipeline. Throttles when scene is stable.
     func analyzeIfReady(image: UIImage) {
         guard isActive, !isRunning else { return }
+
+        // When scene is stable, only re-check every stableCheckInterval
+        if isSceneStable {
+            let now = Date()
+            guard now.timeIntervalSince(lastStableCheckTime) >= stableCheckInterval else { return }
+            lastStableCheckTime = now
+        }
 
         Task {
             await analyze(image)
@@ -205,6 +253,11 @@ class FastVLMService {
         isActive = true
         output = ""
         ttft = ""
+        sceneLabel = ""
+        previousOutput = ""
+        isSceneStable = false
+        stableFrameCount = 0
+        sceneChangeCount = 0
         await load()
     }
 
